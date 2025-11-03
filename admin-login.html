@@ -6,6 +6,8 @@
     <title>Morning Hustle - Admin Login</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide-react@0.395.0/dist/umd/lucide.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="supabase-client.js" defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -17,7 +19,10 @@
 <body class="min-h-screen antialiased">
     <header class="sticky top-0 z-50 p-4">
         <nav class="container mx-auto max-w-6xl glass-panel p-4 flex justify-between items-center rounded-2xl">
-            <a href="index.html" class="text-xl md:text-2xl font-bold text-gray-800 transition-opacity hover:opacity-80">Morning Hustle</a>
+            <a href="index.html" class="flex items-center space-x-2 text-xl md:text-2xl font-bold text-gray-800 transition-opacity hover:opacity-80">
+                <img src="assets/logo.jpg" alt="Morning Hustle Logo" class="h-10 w-10 rounded-full">
+                <span>Morning Hustle</span>
+            </a>
         </nav>
     </header>
     <main class="container mx-auto max-w-4xl p-4 sm:p-6 lg:p-8">
@@ -26,9 +31,9 @@
                 <h1 class="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-4">Admin Access</h1>
                 <p class="text-center text-gray-600 mb-8">Enter your credentials to access the dashboard.</p>
                 <div class="text-center bg-blue-100/50 text-blue-800 text-sm p-3 rounded-lg mb-6">
-                    <strong>Demo Credentials:</strong><br>
-                    Username: <code>admin</code><br>
-                    Password: <code>password</code>
+                    <strong>Admin Credentials:</strong><br>
+                    Username: <code>morninghustelDelhi</code><br>
+                    Password: <code>morninghustelDelhi@123</code>
                 </div>
                 <form id="login-form" class="space-y-6">
                     <div>
@@ -54,7 +59,7 @@
                 e.preventDefault();
                 const username = e.target.username.value;
                 const password = e.target.password.value;
-                if (username === 'admin' && password === 'password') {
+                if (username === 'morninghustelDelhi' && password === 'morninghustelDelhi@123') {
                     window.location.href = 'admin-dashboard.html';
                 } else {
                     errorMessage.classList.remove('hidden');

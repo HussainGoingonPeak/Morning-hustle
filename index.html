@@ -11,6 +11,15 @@
     <!-- Lucide Icons CDN -->
     <script src="https://unpkg.com/lucide-react@0.395.0/dist/umd/lucide.js"></script>
 
+    <!-- Supabase JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Supabase Client -->
+    <script src="supabase-client.js" defer></script>
+
+    <!-- AI Features -->
+    <script src="ai-features.js" defer></script>
+
     <!-- Google Font: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -91,8 +100,9 @@
     <header class="sticky top-0 z-50 p-4">
         <nav class="container mx-auto max-w-6xl glass-panel p-4 flex justify-between items-center rounded-2xl">
             <!-- Logo/Name -->
-            <a href="#" class="text-xl md:text-2xl font-bold text-gray-800 transition-opacity hover:opacity-80">
-                Morning Hustle
+            <a href="#" class="flex items-center space-x-2 text-xl md:text-2xl font-bold text-gray-800 transition-opacity hover:opacity-80">
+                <img src="assets/logo.jpg" alt="Morning Hustle Logo" class="h-10 w-10 rounded-full">
+                <span>Morning Hustle</span>
             </a>
 
             <!-- Desktop Navigation -->
@@ -206,37 +216,20 @@
                 Below is a demonstration of what our AI can do. The input form is for display purposes only.
             </p>
 
-            <!-- Demo Input Form -->
-            <div class="max-w-2xl mx-auto mb-12">
+            <!-- Image Generation Form -->
+            <form id="image-gen-form" class="max-w-2xl mx-auto mb-12">
                 <div class="glass-panel p-4 flex items-center gap-4">
-                    <input type="text" placeholder="e.g., 'A cosmic cat astronaut floating in space'"
-                           class="w-full bg-transparent text-gray-700 placeholder-gray-500 border-0 focus:ring-0 text-lg" disabled>
-                    <button class="bg-gray-700 text-white font-semibold py-2 px-6 rounded-lg cursor-not-allowed opacity-50">
+                    <input type="text" id="image-prompt" placeholder="e.g., 'A cosmic cat astronaut floating in space'"
+                           class="w-full bg-transparent text-gray-700 placeholder-gray-500 border-0 focus:ring-0 text-lg" required>
+                    <button type="submit" class="bg-gray-800 hover:bg-gray-900 text-white font-semibold py-2 px-6 rounded-lg transition-transform duration-300 transform hover:scale-105">
                         Generate
                     </button>
                 </div>
-            </div>
+            </form>
 
-            <!-- Example Image Gallery -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-                <!-- Image 1 -->
-                <div class="glass-panel p-4 rounded-2xl">
-                    <img src="https://assets.lummi.ai/assets/QmYhki1Nn43jxJ6pCFzYp51nE496yS37E333Y2v6j5uE2a?auto=format&w=640"
-                         alt="AI generated image of a cosmic cat astronaut"
-                         class="w-full h-auto object-cover rounded-lg">
-                </div>
-                <!-- Image 2 -->
-                <div class="glass-panel p-4 rounded-2xl">
-                    <img src="https://cdn3.pixelcut.app/generated-image-examples/generated_image_example_2.jpg"
-                         alt="AI generated image of a futuristic city"
-                         class="w-full h-auto object-cover rounded-lg">
-                </div>
-                <!-- Image 3 -->
-                <div class="glass-panel p-4 rounded-2xl">
-                    <img src="https://cdn3.pixelcut.app/generated-image-examples/generated_image_example_3.jpg"
-                         alt="AI generated image of an enchanted forest"
-                         class="w-full h-auto object-cover rounded-lg">
-                </div>
+            <!-- Image Gallery -->
+            <div id="image-gallery" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+                <!-- Generated images will be added here -->
             </div>
         </section>
 
@@ -254,9 +247,7 @@
                 <div class="glass-panel rounded-2xl shadow-lg flex flex-col h-[60vh] max-h-[700px]">
                     <!-- Chat Header -->
                     <div class="p-4 border-b border-gray-200/50 flex items-center">
-                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center mr-4">
-                            <i data-lucide="bot" class="w-7 h-7 text-white"></i>
-                        </div>
+                        <img src="assets/logo.jpg" alt="MH Digital Assistant Avatar" class="w-12 h-12 rounded-full mr-4">
                         <div>
                             <p class="font-bold text-lg text-gray-800">MH Digital Assistant</p>
                             <p class="text-sm text-green-500 flex items-center">
@@ -267,47 +258,19 @@
                     </div>
 
                     <!-- Chat Messages -->
-                    <div class="flex-1 p-6 space-y-6 overflow-y-auto">
-                        <!-- User Message -->
-                        <div class="flex justify-end">
-                            <div class="bg-gray-800 text-white p-3 rounded-l-lg rounded-br-lg max-w-xs">
-                                <p>What kind of websites can you build?</p>
-                            </div>
-                        </div>
-
-                        <!-- AI Message -->
-                        <div class="flex justify-start">
-                            <div class="bg-gray-100 text-gray-700 p-3 rounded-r-lg rounded-bl-lg max-w-md">
-                                <p class="font-semibold mb-1 text-gray-800">MH Digital Assistant</p>
-                                <p>We can build a wide range of websites, from sleek portfolios and business landing pages to more complex e-commerce platforms. Our AI-driven process ensures they are modern, responsive, and optimized for performance right from the start!</p>
-                            </div>
-                        </div>
-
-                        <!-- User Message -->
-                        <div class="flex justify-end">
-                            <div class="bg-gray-800 text-white p-3 rounded-l-lg rounded-br-lg max-w-xs">
-                                <p>How long does it take?</p>
-                            </div>
-                        </div>
-
-                        <!-- AI Message with Typing Indicator -->
-                        <div class="flex justify-start">
-                            <div class="bg-gray-100 text-gray-700 p-3 rounded-r-lg rounded-bl-lg max-w-md">
-                                <p class="font-semibold mb-1 text-gray-800">MH Digital Assistant</p>
-                                <p>Thanks to our AI, we can deploy a standard professional website in as little as 3-5 business days. More complex projects might take a bit longer, but we always prioritize a swift, high-quality delivery.</p>
-                            </div>
-                        </div>
+                    <div id="chat-log" class="flex-1 p-6 space-y-6 overflow-y-auto">
+                        <!-- Messages will be added here dynamically -->
                     </div>
 
-                    <!-- Chat Input (Disabled) -->
-                    <div class="p-4 border-t border-gray-200/50">
+                    <!-- Chat Input Form -->
+                    <form id="chat-form" class="p-4 border-t border-gray-200/50">
                         <div class="glass-panel p-2 flex items-center gap-2 rounded-full">
-                            <input type="text" placeholder="Type your message..." class="w-full bg-transparent text-gray-700 placeholder-gray-500 border-0 focus:ring-0" disabled>
-                            <button class="bg-gray-700 text-white p-3 rounded-full cursor-not-allowed opacity-50">
+                            <input type="text" id="chat-input" placeholder="Type your message..." class="w-full bg-transparent text-gray-700 placeholder-gray-500 border-0 focus:ring-0" required>
+                            <button type="submit" class="bg-gray-800 hover:bg-gray-900 text-white p-3 rounded-full transition-transform duration-300 transform hover:scale-110">
                                 <i data-lucide="send-horizontal" class="w-5 h-5"></i>
                             </button>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </section>
@@ -384,6 +347,57 @@
     <!-- JavaScript for Modals and Icons -->
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
+            // --- AI Feature Event Listeners ---
+
+            // Image Generation
+            const imageGenForm = document.getElementById('image-gen-form');
+            const imageGallery = document.getElementById('image-gallery');
+
+            imageGenForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const prompt = document.getElementById('image-prompt').value;
+                const imageUrl = generateImage(prompt);
+
+                const newImageContainer = document.createElement('div');
+                newImageContainer.className = 'glass-panel p-4 rounded-2xl';
+                newImageContainer.innerHTML = `<img src="${imageUrl}" alt="AI generated image of ${prompt}" class="w-full h-auto object-cover rounded-lg">`;
+
+                // Add to the start of the gallery
+                imageGallery.prepend(newImageContainer);
+
+                // Clear the input
+                e.target.reset();
+            });
+
+            // Chatbot
+            const chatForm = document.getElementById('chat-form');
+            const chatLog = document.getElementById('chat-log');
+            const chatInput = document.getElementById('chat-input');
+
+            chatForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const userMessage = chatInput.value;
+                addChatMessage(userMessage, 'user');
+                chatInput.value = ''; // Clear input immediately
+
+                const aiResponse = await generateGeminiContent(userMessage);
+                addChatMessage(aiResponse, 'ai');
+            });
+
+            function addChatMessage(message, sender) {
+                const messageElement = document.createElement('div');
+                if (sender === 'user') {
+                    messageElement.className = 'flex justify-end';
+                    messageElement.innerHTML = `<div class="bg-gray-800 text-white p-3 rounded-l-lg rounded-br-lg max-w-xs"><p>${message}</p></div>`;
+                } else {
+                    messageElement.className = 'flex justify-start';
+                    messageElement.innerHTML = `<div class="bg-gray-100 text-gray-700 p-3 rounded-r-lg rounded-bl-lg max-w-md"><p class="font-semibold mb-1 text-gray-800">MH Digital Assistant</p><p>${message}</p></div>`;
+                }
+                chatLog.appendChild(messageElement);
+                // Scroll to the bottom
+                chatLog.scrollTop = chatLog.scrollHeight;
+            }
+
             // Initialize Lucide Icons
             lucide.createIcons();
 

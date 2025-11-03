@@ -1,0 +1,42 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - banner [ref=e2]:
+    - navigation [ref=e3]:
+      - link "Morning Hustle Logo Morning Hustle" [ref=e4] [cursor=pointer]:
+        - /url: index.html
+        - img "Morning Hustle Logo" [ref=e5]
+        - generic [ref=e6]: Morning Hustle
+      - link "Logout" [ref=e7] [cursor=pointer]:
+        - /url: admin-login.html
+  - main [ref=e8]:
+    - generic [ref=e9]:
+      - heading "Admin Dashboard" [level=1] [ref=e10]
+      - generic [ref=e11]:
+        - generic [ref=e12]:
+          - heading "Total Users" [level=2] [ref=e13]
+          - paragraph [ref=e14]: "147"
+        - generic [ref=e15]:
+          - heading "Pro Plans" [level=2] [ref=e16]
+          - paragraph [ref=e17]: "32"
+        - generic [ref=e18]:
+          - heading "Free Plans" [level=2] [ref=e19]
+          - paragraph [ref=e20]: "115"
+        - generic [ref=e21]:
+          - heading "Services Used" [level=2] [ref=e22]
+          - paragraph [ref=e23]: "542"
+      - generic [ref=e24]:
+        - heading "Booking Management Refresh" [level=2] [ref=e25]:
+          - generic [ref=e26]: Booking Management
+          - button "Refresh" [active] [ref=e27] [cursor=pointer]: Refresh
+        - table [ref=e30]:
+          - rowgroup [ref=e31]:
+            - row "Customer Service Slot Time Status Actions" [ref=e32]:
+              - cell "Customer" [ref=e33]
+              - cell "Service" [ref=e34]
+              - cell "Slot Time" [ref=e35]
+              - cell "Status" [ref=e36]
+              - cell "Actions" [ref=e37]
+          - rowgroup
+```

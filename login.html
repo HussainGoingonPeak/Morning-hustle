@@ -11,6 +11,12 @@
     <!-- Lucide Icons CDN -->
     <script src="https://unpkg.com/lucide-react@0.395.0/dist/umd/lucide.js"></script>
 
+    <!-- Supabase JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Supabase Client -->
+    <script src="supabase-client.js" defer></script>
+
     <!-- Google Font: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -91,8 +97,9 @@
     <header class="sticky top-0 z-50 p-4">
         <nav class="container mx-auto max-w-6xl glass-panel p-4 flex justify-between items-center rounded-2xl">
             <!-- Logo/Name -->
-            <a href="#" class="text-xl md:text-2xl font-bold text-gray-800 transition-opacity hover:opacity-80">
-                Morning Hustle
+            <a href="#" class="flex items-center space-x-2 text-xl md:text-2xl font-bold text-gray-800 transition-opacity hover:opacity-80">
+                <img src="assets/logo.jpg" alt="Morning Hustle Logo" class="h-10 w-10 rounded-full">
+                <span>Morning Hustle</span>
             </a>
 
             <!-- Desktop Navigation -->
@@ -130,27 +137,37 @@
     <!-- Main Content -->
     <main class="container mx-auto max-w-6xl p-4 sm:p-6 lg:p-8">
 
-        <!-- Login Section -->
+        <!-- Authentication Section -->
         <section class="min-h-[80vh] flex items-center justify-center">
             <div class="glass-panel p-8 md:p-12 rounded-3xl w-full max-w-md">
-                <h1 class="text-3xl md:text-4xl font-bold text-gray-900 text-center mb-6">
-                    Secure Login
-                </h1>
-                <p class="text-center text-gray-600 mb-8">
-                    This is a non-functional demonstration page.
-                </p>
 
-                <!-- Social Logins -->
-                <div class="space-y-4">
-                    <button class="w-full flex items-center justify-center gap-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 px-4 rounded-lg transition-colors duration-300 cursor-not-allowed opacity-60">
-                        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M21.35,11.1H12.18V13.83H18.69C18.36,17.64 15.19,19.27 12.19,19.27C8.36,19.27 5,16.25 5,12C5,7.75 8.36,4.73 12.19,4.73C14.04,4.73 15.3,5.5 15.9,6.03L18.05,3.95C16.32,2.45 14.36,1.82 12.19,1.82C6.93,1.82 2.86,6.4 2.86,12C2.86,17.6 6.93,22.18 12.19,22.18C17.6,22.18 21.54,18.34 21.54,12.33C21.54,11.76 21.48,11.43 21.35,11.1Z"/></svg>
-                        Sign in with Google
+                <!-- Tabs -->
+                <div class="flex border-b border-gray-200/80 mb-8">
+                    <button id="login-tab" class="flex-1 py-3 font-semibold text-lg border-b-2 border-gray-800 text-gray-900">
+                        Login
                     </button>
-                    <button class="w-full flex items-center justify-center gap-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 px-4 rounded-lg transition-colors duration-300 cursor-not-allowed opacity-60">
-                        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.32 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96C18.34 21.21 22 17.06 22 12.06C22 6.53 17.5 2.04 12 2.04Z"/></svg>
-                        Sign in with Facebook
+                    <button id="signup-tab" class="flex-1 py-3 font-semibold text-lg border-b-2 border-transparent text-gray-500 hover:text-gray-800">
+                        Sign Up
                     </button>
                 </div>
+
+                <!-- Message Area -->
+                <div id="message-area" class="p-4 mb-6 rounded-lg text-center hidden"></div>
+
+                <!-- Login Form -->
+                <form id="login-form" class="space-y-6">
+                    <input type="email" id="login-email" placeholder="Email Address" required class="w-full bg-gray-100/80 border-gray-300/90 rounded-lg p-3 focus:ring-2 focus:ring-gray-400 focus:border-transparent transition">
+                    <input type="password" id="login-password" placeholder="Password" required class="w-full bg-gray-100/80 border-gray-300/90 rounded-lg p-3 focus:ring-2 focus:ring-gray-400 focus:border-transparent transition">
+                    <button type="submit" class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-6 rounded-lg transition-transform duration-300 transform hover:scale-105 shadow-lg">Login</button>
+                </form>
+
+                <!-- Sign Up Form (Hidden by default) -->
+                <form id="signup-form" class="hidden space-y-6">
+                    <input type="text" id="signup-username" placeholder="Username" required class="w-full bg-gray-100/80 border-gray-300/90 rounded-lg p-3 focus:ring-2 focus:ring-gray-400 focus:border-transparent transition">
+                    <input type="email" id="signup-email" placeholder="Email Address" required class="w-full bg-gray-100/80 border-gray-300/90 rounded-lg p-3 focus:ring-2 focus:ring-gray-400 focus:border-transparent transition">
+                    <input type="password" id="signup-password" placeholder="Password" required class="w-full bg-gray-100/80 border-gray-300/90 rounded-lg p-3 focus:ring-2 focus:ring-gray-400 focus:border-transparent transition">
+                    <button type="submit" class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-6 rounded-lg transition-transform duration-300 transform hover:scale-105 shadow-lg">Create Account</button>
+                </form>
 
                 <!-- Divider -->
                 <div class="flex items-center my-8">
@@ -159,30 +176,11 @@
                     <hr class="w-full border-gray-300/70">
                 </div>
 
-                <!-- 2FA and Captcha Placeholders -->
-                <div class="space-y-6">
-                    <div>
-                        <label for="2fa-code" class="block text-sm font-medium text-gray-700 mb-1">Two-Factor Authentication</label>
-                        <input type="text" id="2fa-code" placeholder="Enter code from your app" class="w-full bg-gray-100/80 border-gray-300/90 rounded-lg p-3 focus:ring-2 focus:ring-gray-400 focus:border-transparent transition cursor-not-allowed" disabled>
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Human Verification</label>
-                        <div class="glass-panel p-4 rounded-lg flex items-center justify-between opacity-70 cursor-not-allowed">
-                            <div class="flex items-center gap-4">
-                                <div class="w-7 h-7 border-2 border-gray-400 rounded"></div>
-                                <p class="text-gray-600">I am not a robot</p>
-                            </div>
-                            <i data-lucide="shield-check" class="w-8 h-8 text-gray-400"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Login Button -->
-                <button class="w-full bg-gray-800 text-white font-bold py-3 px-6 rounded-lg mt-8 cursor-not-allowed opacity-50">
-                    Login
+                <!-- GitHub OAuth Button -->
+                <button id="github-auth-button" class="w-full flex items-center justify-center gap-3 bg-gray-900 hover:bg-black text-white font-semibold py-3 px-4 rounded-lg transition-colors duration-300">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                    Sign in with GitHub
                 </button>
-
             </div>
         </section>
 
@@ -254,9 +252,108 @@
     </div>
 
 
-    <!-- JavaScript for Modals and Icons -->
+    <!-- JavaScript for Modals, Icons, and Supabase Auth -->
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
+            // The 'supabaseClient' is already available from supabase-client.js
+
+            // --- Supabase Authentication Functions ---
+
+            async function signUp(email, password, userName) {
+                const { data, error } = await supabaseClient.auth.signUp({
+                    email: email,
+                    password: password,
+                    options: { data: { user_name: userName } }
+                });
+                if (error) {
+                    displayMessage(error.message, 'error');
+                } else {
+                    displayMessage('Sign up successful! Please check your email to verify your account.', 'success');
+                    // Redirect after a short delay
+                    setTimeout(() => { window.location.href = 'index.html'; }, 3000);
+                }
+            }
+
+            async function logIn(email, password) {
+                const { data, error } = await supabaseClient.auth.signInWithPassword({
+                    email: email,
+                    password: password
+                });
+                if (error) {
+                    displayMessage(error.message, 'error');
+                } else {
+                    displayMessage('Login successful! Redirecting...', 'success');
+                    window.location.href = 'index.html';
+                }
+            }
+
+            async function signInWithGitHub() {
+                const { data, error } = await supabaseClient.auth.signInWithOAuth({
+                    provider: 'github',
+                    options: { redirectTo: window.location.origin + '/index.html' }
+                });
+                 if (error) {
+                    displayMessage(error.message, 'error');
+                }
+            }
+
+            // --- UI Helper Functions ---
+
+            const messageArea = document.getElementById('message-area');
+            function displayMessage(message, type) {
+                messageArea.textContent = message;
+                messageArea.className = `p-4 mb-6 rounded-lg text-center ${type === 'error' ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'}`;
+                messageArea.classList.remove('hidden');
+            }
+
+            // --- Tab Switching Logic ---
+
+            const loginTab = document.getElementById('login-tab');
+            const signupTab = document.getElementById('signup-tab');
+            const loginForm = document.getElementById('login-form');
+            const signupForm = document.getElementById('signup-form');
+
+            loginTab.addEventListener('click', () => {
+                loginTab.classList.add('border-gray-800', 'text-gray-900');
+                loginTab.classList.remove('border-transparent', 'text-gray-500');
+                signupTab.classList.add('border-transparent', 'text-gray-500');
+                signupTab.classList.remove('border-gray-800', 'text-gray-900');
+                loginForm.classList.remove('hidden');
+                signupForm.classList.add('hidden');
+                messageArea.classList.add('hidden');
+            });
+
+            signupTab.addEventListener('click', () => {
+                signupTab.classList.add('border-gray-800', 'text-gray-900');
+                signupTab.classList.remove('border-transparent', 'text-gray-500');
+                loginTab.classList.add('border-transparent', 'text-gray-500');
+                loginTab.classList.remove('border-gray-800', 'text-gray-900');
+                signupForm.classList.remove('hidden');
+                loginForm.classList.add('hidden');
+                messageArea.classList.add('hidden');
+            });
+
+            // --- Event Listeners for Forms and Buttons ---
+
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
+                logIn(email, password);
+            });
+
+            signupForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const username = document.getElementById('signup-username').value;
+                const email = document.getElementById('signup-email').value;
+                const password = document.getElementById('signup-password').value;
+                signUp(email, password, username);
+            });
+
+            document.getElementById('github-auth-button').addEventListener('click', () => {
+                signInWithGitHub();
+            });
+
             // Initialize Lucide Icons
             lucide.createIcons();
 
