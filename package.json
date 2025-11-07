@@ -1,0 +1,14 @@
+{
+  "name": "morning-hustle-digital-services",
+  "version": "1.0.0",
+  "description": "A static website with AI features.",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@playwright/test": "^1.56.1",
+    "dotenv": "^17.2.3",
+    "playwright": "^1.56.1"
+  }
+}
