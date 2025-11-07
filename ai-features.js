@@ -4,8 +4,8 @@
 // The API keys below are placeholders. You MUST replace them with your actual API keys.
 // Exposing secret keys in public code is a major security risk.
 // In a production app, manage these on a secure backend server.
-const OPENROUTER_API_KEY = 'YOUR_OPENROUTER_API_KEY'; // For Chat
-const BYETZ_API_KEY = 'YOUR_PRODIA_API_KEY'; // For Images (Prodia is the provider)
+const OPENROUTER_API_KEY = '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'; // For Chat
+const BYETZ_API_KEY = 'ce53087d55611a0a22e0d2318ba0ba8d'; // For Images (Prodia is the provider)
 
 document.addEventListener('DOMContentLoaded', () => {
     // --- DOM Element References ---
