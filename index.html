@@ -206,71 +206,33 @@
         </section>
 
 
-        <!-- AI Image Generation Showcase Section -->
-        <section id="image-generation" class="my-24 text-center">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-                Bring Your Ideas to Life
-            </h2>
-            <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-12">
-                Describe any scene, and our AI will generate a stunning, high-resolution image.
-                Below is a demonstration of what our AI can do. The input form is for display purposes only.
-            </p>
-
-            <!-- Image Generation Form -->
-            <form id="image-gen-form" class="max-w-2xl mx-auto mb-12">
-                <div class="glass-panel p-4 flex items-center gap-4">
-                    <input type="text" id="image-prompt" placeholder="e.g., 'A cosmic cat astronaut floating in space'"
-                           class="w-full bg-transparent text-gray-700 placeholder-gray-500 border-0 focus:ring-0 text-lg" required>
-                    <button type="submit" class="bg-gray-800 hover:bg-gray-900 text-white font-semibold py-2 px-6 rounded-lg transition-transform duration-300 transform hover:scale-105">
-                        Generate
-                    </button>
-                </div>
-            </form>
-
-            <!-- Image Gallery -->
-            <div id="image-gallery" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-                <!-- Generated images will be added here -->
+        <!-- AI Interaction Section -->
+        <section id="ai-interaction" class="my-24">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">AI-Powered Creativity</h2>
+                <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+                    Engage with our AI assistant or generate stunning images. Select a mode and enter your prompt below.
+                </p>
             </div>
-        </section>
 
-
-        <!-- AI Chatbot Demonstration Section -->
-        <section id="chatbot-demo" class="my-24">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-900 mb-4">
-                Experience Our AI Assistant
-            </h2>
-            <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto text-center mb-12">
-                Ask our AI assistant anything about our services. This is a pre-recorded demonstration to show you how it works.
-            </p>
-
-            <div class="max-w-2xl mx-auto">
-                <div class="glass-panel rounded-2xl shadow-lg flex flex-col h-[60vh] max-h-[700px]">
-                    <!-- Chat Header -->
-                    <div class="p-4 border-b border-gray-200/50 flex items-center">
-                        <img src="assets/logo.jpg" alt="MH Digital Assistant Avatar" class="w-12 h-12 rounded-full mr-4">
-                        <div>
-                            <p class="font-bold text-lg text-gray-800">MH Digital Assistant</p>
-                            <p class="text-sm text-green-500 flex items-center">
-                                <span class="w-2 h-2 bg-green-500 rounded-full inline-block mr-2"></span>
-                                Online
-                            </p>
+            <div class="max-w-3xl mx-auto">
+                <!-- Main Form -->
+                <form id="ai-form" class="mb-8">
+                    <div class="glass-panel p-4 flex flex-col sm:flex-row items-center gap-4 rounded-2xl">
+                        <div class="w-full sm:w-auto flex items-center gap-2">
+                            <button type="button" id="chat-mode-btn" class="bg-gray-800 text-white font-semibold py-2 px-4 rounded-lg">Chat</button>
+                            <button type="button" id="image-mode-btn" class="bg-gray-200 text-gray-700 font-semibold py-2 px-4 rounded-lg">Image</button>
                         </div>
+                        <input type="text" id="ai-prompt" placeholder="Ask a question or describe an image..." class="w-full bg-transparent text-gray-700 placeholder-gray-500 border-0 focus:ring-0 text-lg">
+                        <button type="submit" class="bg-gray-800 hover:bg-gray-900 text-white font-semibold py-2 px-6 rounded-lg transition-transform duration-300 transform hover:scale-105">
+                            Generate
+                        </button>
                     </div>
+                </form>
 
-                    <!-- Chat Messages -->
-                    <div id="chat-log" class="flex-1 p-6 space-y-6 overflow-y-auto">
-                        <!-- Messages will be added here dynamically -->
-                    </div>
-
-                    <!-- Chat Input Form -->
-                    <form id="chat-form" class="p-4 border-t border-gray-200/50">
-                        <div class="glass-panel p-2 flex items-center gap-2 rounded-full">
-                            <input type="text" id="chat-input" placeholder="Type your message..." class="w-full bg-transparent text-gray-700 placeholder-gray-500 border-0 focus:ring-0" required>
-                            <button type="submit" class="bg-gray-800 hover:bg-gray-900 text-white p-3 rounded-full transition-transform duration-300 transform hover:scale-110">
-                                <i data-lucide="send-horizontal" class="w-5 h-5"></i>
-                            </button>
-                        </div>
-                    </form>
+                <!-- Response Box -->
+                <div id="response-box" class="glass-panel p-6 rounded-2xl min-h-[300px]">
+                    <!-- AI responses will be displayed here -->
                 </div>
             </div>
         </section>
@@ -347,57 +309,6 @@
     <!-- JavaScript for Modals and Icons -->
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
-            // --- AI Feature Event Listeners ---
-
-            // Image Generation
-            const imageGenForm = document.getElementById('image-gen-form');
-            const imageGallery = document.getElementById('image-gallery');
-
-            imageGenForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const prompt = document.getElementById('image-prompt').value;
-                const imageUrl = generateImage(prompt);
-
-                const newImageContainer = document.createElement('div');
-                newImageContainer.className = 'glass-panel p-4 rounded-2xl';
-                newImageContainer.innerHTML = `<img src="${imageUrl}" alt="AI generated image of ${prompt}" class="w-full h-auto object-cover rounded-lg">`;
-
-                // Add to the start of the gallery
-                imageGallery.prepend(newImageContainer);
-
-                // Clear the input
-                e.target.reset();
-            });
-
-            // Chatbot
-            const chatForm = document.getElementById('chat-form');
-            const chatLog = document.getElementById('chat-log');
-            const chatInput = document.getElementById('chat-input');
-
-            chatForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const userMessage = chatInput.value;
-                addChatMessage(userMessage, 'user');
-                chatInput.value = ''; // Clear input immediately
-
-                const aiResponse = await generateGeminiContent(userMessage);
-                addChatMessage(aiResponse, 'ai');
-            });
-
-            function addChatMessage(message, sender) {
-                const messageElement = document.createElement('div');
-                if (sender === 'user') {
-                    messageElement.className = 'flex justify-end';
-                    messageElement.innerHTML = `<div class="bg-gray-800 text-white p-3 rounded-l-lg rounded-br-lg max-w-xs"><p>${message}</p></div>`;
-                } else {
-                    messageElement.className = 'flex justify-start';
-                    messageElement.innerHTML = `<div class="bg-gray-100 text-gray-700 p-3 rounded-r-lg rounded-bl-lg max-w-md"><p class="font-semibold mb-1 text-gray-800">MH Digital Assistant</p><p>${message}</p></div>`;
-                }
-                chatLog.appendChild(messageElement);
-                // Scroll to the bottom
-                chatLog.scrollTop = chatLog.scrollHeight;
-            }
-
             // Initialize Lucide Icons
             lucide.createIcons();
 
