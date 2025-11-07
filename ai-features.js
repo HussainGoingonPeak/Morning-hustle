@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    "model": "openai/gpt-3.5-turbo",
+                    "model": "minimax/minimax-m2:free",
                     "messages": [{ "role": "user", "content": prompt }]
                 })
             });
@@ -245,7 +245,7 @@ document.addEventListener('DOMContentLoaded', () => {
             messageWrapper.className = 'flex justify-start mb-4';
             messageWrapper.innerHTML = `
                 <div class="flex items-start gap-2.5">
-                    <img src="assets/logo.jpg" alt="AI Avatar" class="w-8 h-8 rounded-full">
+                    <img src="assets/logo.jpg" alt="MH Digital Assistant Avatar" class="w-8 h-8 rounded-full">
                     <div class="bg-gray-100 text-gray-700 p-3 rounded-r-lg rounded-bl-lg max-w-md"><p>${content}</p></div>
                 </div>
             `;
@@ -261,7 +261,7 @@ document.addEventListener('DOMContentLoaded', () => {
             loader.className = 'loader flex justify-start mb-4';
             loader.innerHTML = `
                 <div class="flex items-center gap-2.5">
-                    <img src="assets/logo.jpg" alt="AI Avatar" class="w-8 h-8 rounded-full">
+                    <img src="assets/logo.jpg" alt="MH Digital Assistant Avatar" class="w-8 h-8 rounded-full">
                     <div class="bg-gray-100 text-gray-700 p-3 rounded-r-lg rounded-bl-lg">
                         <span class="loader-text">${text}</span>
                         <span class="inline-block animate-bounce ml-1">.</span>
