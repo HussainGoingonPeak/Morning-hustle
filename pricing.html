@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morning Hustle Digital Services - AI-Powered Solutions</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide-react@0.395.0/dist/umd/lucide.js"></script>
+
+    <!-- Supabase JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Supabase Client -->
+    <script src="supabase-client.js" defer></script>
+
+    <!-- Google Font: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* Base font */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* White Background */
+        body {
+            background-color: #ffffff; /* 100% white background */
+            color: #374151; /* Default text color: gray-700 */
+        }
+
+        /* The "Glass Panel" effect class */
+        /* Fully blurry glass theme with 60% white, 30% grey */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.6); /* 60% white */
+            backdrop-filter: blur(24px); /* Fully blurry effect */
+            -webkit-backdrop-filter: blur(24px); /* For Safari */
+            border-radius: 1.5rem; /* 24px */
+            border: 1px solid rgba(209, 213, 219, 0.3); /* 30% grey border */
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
+
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9; /* gray-100 */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; /* gray-300 */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; /* gray-400 */
+        }
+
+        /* Smooth animation for FAQ dropdown */
+        details > summary {
+            list-style: none; /* Remove default triangle */
+        }
+        details > summary::-webkit-details-marker {
+            display: none; /* Remove default triangle in Safari */
+        }
+
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Modal Animation */
+        #terms-modal {
+            transition: opacity 300ms ease-in-out, visibility 300ms ease-in-out;
+        }
+        #terms-modal .glass-panel {
+            transition: transform 300ms ease-in-out;
+        }
+        #terms-modal.modal-closed {
+            opacity: 0;
+            visibility: hidden;
+        }
+        #terms-modal.modal-closed .glass-panel {
+            transform: scale(0.95) translateY(10px);
+        }
+    </style>
+</head>
+<body class="min-h-screen antialiased">
+
+
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-50 p-4">
+        <nav class="container mx-auto max-w-6xl glass-panel p-4 flex justify-between items-center rounded-2xl">
+            <!-- Logo/Name -->
+            <a href="#" class="flex items-center space-x-2 text-xl md:text-2xl font-bold text-gray-800 transition-opacity hover:opacity-80">
+                <img src="assets/logo.jpg" alt="Morning Hustle Logo" class="h-10 w-10 rounded-full">
+                <span>Morning Hustle</span>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex items-center gap-6">
+                <a href="index.html" class="text-gray-700 font-semibold hover:text-gray-900 transition-colors">Home</a>
+                <a href="pricing.html" class="text-gray-700 font-semibold hover:text-gray-900 transition-colors">Pricing</a>
+                <a href="contact.html" class="text-gray-700 font-semibold hover:text-gray-900 transition-colors">Contact</a>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex items-center gap-2">
+                <a href="login.html"
+                   class="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-2 px-4 rounded-full transition-all duration-300 transform hover:scale-105">
+                    <i data-lucide="log-in" class="w-5 h-5"></i>
+                    <span class="hidden sm:inline">Login</span>
+                </a>
+                <button id="mobile-menu-button" class="md:hidden p-2 rounded-full hover:bg-gray-100">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden fixed inset-x-0 top-0 z-40 p-4 pt-24">
+             <div class="glass-panel p-6 rounded-3xl mt-4 text-center space-y-4">
+                <a href="index.html" class="block text-lg font-semibold text-gray-800 hover:bg-gray-200/50 p-3 rounded-xl">Home</a>
+                <a href="pricing.html" class="block text-lg font-semibold text-gray-800 hover:bg-gray-200/50 p-3 rounded-xl">Pricing</a>
+                <a href="contact.html" class="block text-lg font-semibold text-gray-800 hover:bg-gray-200/50 p-3 rounded-xl">Contact</a>
+                <a href="https://www.instagram.com/ai_with_hussain?igsh=cXp0NDRha3ptOWFw" target="_blank" rel="noopener noreferrer" class="block text-lg font-semibold text-gray-800 hover:bg-gray-200/50 p-3 rounded-xl">Follow on Instagram</a>
+            </div>
+        </nav>
+    </header>
+
+
+    <!-- Main Content -->
+    <main class="container mx-auto max-w-6xl p-4 sm:p-6 lg:p-8">
+
+        <!-- Pricing Section -->
+        <section class="min-h-[80vh] flex flex-col items-center justify-center text-center">
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 leading-tight mb-6">
+                Choose Your Plan
+            </h1>
+            <p class="text-lg md:text-xl text-gray-600 mb-12 max-w-2xl">
+                Simple, transparent pricing for every need. Get started for free or unlock unlimited potential with our Pro plan.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-4xl">
+
+                <!-- Free Plan -->
+                <div class="glass-panel p-8 rounded-3xl flex flex-col h-full">
+                    <div class="flex-grow">
+                        <i data-lucide="award" class="w-12 h-12 text-gray-700 mx-auto mb-4"></i>
+                        <h2 class="text-3xl font-bold text-gray-800 mb-2">Basic</h2>
+                        <p class="text-gray-600 mb-6">Perfect for getting started</p>
+
+                        <p class="text-5xl font-extrabold text-gray-900 mb-6">
+                            $0<span class="text-lg font-medium text-gray-500">/mo</span>
+                        </p>
+
+                        <ul class="space-y-4 text-left text-gray-600">
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i>
+                                <span><span class="font-semibold">50</span> AI Image Generations/Day</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i>
+                                <span>Limited AI Text Generation</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i>
+                                <span>Standard AI Website Build</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="x-circle" class="w-5 h-5 text-gray-400"></i>
+                                <span>Priority Support</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <button class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold py-3 px-6 rounded-full mt-8 transition-transform duration-300 transform hover:scale-105 cursor-not-allowed opacity-70">
+                        Get Started
+                    </button>
+                </div>
+
+                <!-- Pro Plan -->
+                <div class="glass-panel p-8 rounded-3xl flex flex-col h-full border-2 border-gray-800 shadow-2xl relative">
+                    <span class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs font-bold px-3 py-1 rounded-full uppercase">Most Popular</span>
+                    <div class="flex-grow">
+                        <i data-lucide="gem" class="w-12 h-12 text-gray-800 mx-auto mb-4"></i>
+                        <h2 class="text-3xl font-bold text-gray-900 mb-2">Pro</h2>
+                        <p class="text-gray-600 mb-6">For professionals and creators</p>
+
+                        <p class="text-5xl font-extrabold text-gray-900 mb-6">
+                            $10<span class="text-lg font-medium text-gray-500">/mo</span>
+                        </p>
+
+                        <ul class="space-y-4 text-left text-gray-600">
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i>
+                                <span><span class="font-semibold">Unlimited</span> AI Image Generations</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i>
+                                <span><span class="font-semibold">Unlimited</span> AI Text Generation</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i>
+                                <span>Advanced AI Website Features</span>
+                            </li>
+                            <li class="flex items-center gap-3">
+                                <i data-lucide="check-circle" class="w-5 h-5 text-green-500"></i>
+                                <span>Priority Support</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <button class="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-6 rounded-full mt-8 transition-transform duration-300 transform hover:scale-105 cursor-not-allowed opacity-80">
+                        Go Pro
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-10 border-t border-gray-200/50 mt-16">
+        <div class="flex justify-center gap-6 mb-4">
+            <a href="https://www.instagram.com/ai_with_hussain?igsh=cXp0NDRha3ptOWFw" target="_blank" rel="noopener noreferrer"
+               class="text-gray-500 hover:text-gray-800 transition-colors">
+                <i data-lucide="instagram" class="w-6 h-6"></i>
+            </a>
+            <!-- Button to open Terms of Service Modal -->
+            <button id="open-terms" class="flex items-center gap-1.5 text-gray-500 hover:text-gray-800 transition-colors">
+                <i data-lucide="shield-check" class="w-6 h-6"></i>
+                <span>Terms of Service</span>
+            </button>
+        </div>
+        <p class="text-gray-500 text-sm">
+            © <span id="current-year"></span> Morning Hustle Digital Services. All Rights Reserved.
+        </p>
+    </footer>
+
+
+    <!-- Terms of Service Modal -->
+    <div id="terms-modal" class="fixed inset-0 z-[99] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 modal-closed">
+        <div class="glass-panel p-6 md:p-8 max-w-3xl w-full max-h-[85vh] flex flex-col">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-bold text-gray-900">Terms of Service</h2>
+                <button id="close-terms" class="text-gray-600 hover:text-gray-900 transition-colors">
+                    <i data-lucide="x" class="w-8 h-8"></i>
+                </button>
+            </div>
+
+            <div class="overflow-y-auto pr-2 space-y-4 text-gray-600">
+                <p><strong>Last Updated:</strong> November 1, 2025</p>
+                <p>Welcome to Morning Hustle Digital Services. By using our services, you agree to be bound by the following terms and conditions. Please read them carefully.</p>
+
+                <h3 class="text-lg font-semibold text-gray-800 mt-4">1. Services</h3>
+                <p>Morning Hustle Digital Services ("we", "us") provides AI-powered digital services, including but not limited to website creation, advertising content, video generation, and image generation ("Services"). All services are provided as-is, based on the specifications agreed upon in your project proposal.</p>
+
+                <h3 class="text-lg font-semibold text-gray-800 mt-4">2. Acceptance of Terms</h3>
+                <p>By engaging our Services, you confirm that you have read, understood, and agree to these Terms. You warrant that you are at least 18 years of age and have the legal authority to enter into this agreement.</p>
+
+
+                <h3 class="text-lg font-semibold text-gray-800 mt-4">3. Intellectual Property</h3>
+                <p>Upon receipt of full payment, we grant you full and exclusive ownership of the final, delivered assets. We retain the right to use the project in our portfolio and for marketing purposes, unless otherwise agreed upon in writing.</p>
+
+
+                <h3 class="text-lg font-semibold text-gray-800 mt-4">4. Client Responsibilities</h3>
+                <p>You are responsible for providing all necessary materials (e.g., brand guidelines, specific text, logos) in a timely manner. You warrant that you have all necessary rights and permissions for any materials you provide to us.</p>
+
+
+                <h3 class="text-lg font-semibold text-gray-800 mt-4">5. Payments and Refunds</h3>
+                <p>Payment terms will be specified in your project proposal. A non-refundable deposit is typically required to begin work. Due to the custom nature of our AI-generated work, we do not offer refunds for services already rendered.</p>
+
+
+                <h3 class="text-lg font-semibold text-gray-800 mt-4">6. Limitation of Liability</h3>
+                <p>Morning Hustle Digital Services will not be liable for any indirect, incidental, or consequential damages (including lost profits) resulting from the use of our Services. Our total liability to you for any and all claims shall not exceed the total amount paid by you for the Services in question.</p>
+
+
+                <h3 class="text-lg font-semibold text-gray-800 mt-4">7. Termination</h3>
+                <p>Either party may terminate this agreement with written notice if the other party breaches a material term. In the event of termination by you, you will be responsible for payment for all work completed up to the date of termination.</p>
+
+                <h3 class="text-lg font-semibold text-gray-800 mt-4">8. Governing Law</h3>
+                <p>These terms shall be governed by the laws of the jurisdiction in which Morning Hustle Digital Services is based, without regard to its conflict of law provisions.</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- JavaScript for Modals and Icons -->
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            // Initialize Lucide Icons
+            lucide.createIcons();
+
+            // Set current year in footer
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+
+            // Mobile Menu Toggle
+            const menuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            if (menuButton && mobileMenu) {
+                menuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+
+            // Modal Functionality
+            const openBtn = document.getElementById('open-terms');
+            const closeBtn = document.getElementById('close-terms');
+            const modal = document.getElementById('terms-modal');
+
+
+            if (openBtn && closeBtn && modal) {
+                // Open modal
+                openBtn.addEventListener('click', () => {
+                    modal.classList.remove('modal-closed');
+                });
+
+
+                // Close modal via 'X' button
+                closeBtn.addEventListener('click', () => {
+                    modal.classList.add('modal-closed');
+                });
+
+
+                // Close modal by clicking outside the content box
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.classList.add('modal-closed');
+                    }
+                });
+
+
+                // Close modal with 'Escape' key
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && !modal.classList.contains('modal-closed')) {
+                        modal.classList.add('modal-closed');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
